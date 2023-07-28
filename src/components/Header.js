@@ -22,24 +22,34 @@ import {
   PhoneIcon,
   LockClosedIcon
 } from "@heroicons/react/24/outline";
+import { Link } from 'react-router-dom';
 
 // profile menu component
 const profileMenuItems = [
   {
     label: "My Profile",
     icon: UserCircleIcon,
+    pageUrl: '/profile'
   },
   {
     label: "Edit Profile",
     icon: Cog6ToothIcon,
+    pageUrl: '/edit-profile'
   },
   {
-    label: "Sign In",
+    label: "Register",
     icon: LockClosedIcon,
+    pageUrl: '/register'
   },
   {
-    label: "Sign Out",
+    label: "Login",
+    icon: LockClosedIcon,
+    pageUrl: '/login'
+  },
+  {
+    label: "Logout",
     icon: PowerIcon,
+    pageUrl: '/logout'
   },
 ];
  
@@ -72,7 +82,7 @@ function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
+        {profileMenuItems.map(({ label, icon, pageUrl }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
@@ -89,12 +99,12 @@ function ProfileMenu() {
                 strokeWidth: 2,
               })}
               <Typography
-                as="span"
+                as="a"
                 variant="small"
                 className="font-normal"
                 color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
+              >   
+                <Link to={pageUrl}>{label}</Link>            
               </Typography>
             </MenuItem>
           );
