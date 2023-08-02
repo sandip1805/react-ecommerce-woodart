@@ -7,6 +7,8 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import { Link } from 'react-router-dom';
+import AlertService from '../services/ToasterService.js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -53,8 +55,22 @@ const Login = () => {
           </Typography>
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
             <div className="mb-4 flex flex-col gap-6">
-              <Input size="lg" type='email' label="Email" id='email' value={email} onChange={handleEmailChange} />
-              <Input type="password" size="lg" label="Password" id='password' value={password} onChange={handlePasswordChange} />
+            <Input 
+              size="lg" 
+              label="Email" 
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              id="email"
+            />
+            <Input 
+              type="password" 
+              size="lg" 
+              label="Password"
+              value={password}
+              onChange={handlePasswordChange}
+              id="password"
+            />
             </div>
             <Checkbox
               label={
@@ -79,13 +95,15 @@ const Login = () => {
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
               Don't have an account?{" "}
-              <a
-                href="/register"
+              <Link
+                to="/register"
                 className="font-medium text-blue-500 transition-colors hover:text-blue-700"
               >
-                Register
-              </a>
+                Register Here
+              </Link>
             </Typography>
+            {errorMessage && <AlertService type={'ERROR'} message={errorMessage}/>}
+            {successMessage && <AlertService type={'SUCCESS'} message={successMessage}/>}
           </form>
         </Card>
       </div>
