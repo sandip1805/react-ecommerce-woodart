@@ -99,7 +99,6 @@ function ProfileMenu() {
                 strokeWidth: 2,
               })}
               <Typography
-                as="a"
                 variant="small"
                 className="font-normal"
                 color={isLastItem ? "red" : "inherit"}

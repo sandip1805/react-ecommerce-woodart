@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import authService from '../services/AuthService';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -62,12 +63,12 @@ const Register = () => {
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="font-medium text-blue-500 transition-colors hover:text-blue-700"
             >
               Sign In
-            </a>
+            </Link>
           </Typography>
         </form>
       </Card>
