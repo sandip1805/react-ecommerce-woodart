@@ -8,7 +8,7 @@ import {
     IconButton,
   } from "@material-tailwind/react";
    
-  export function ProductCard() {
+  export function ProductCard({product}) {
     return (
       <Card className="w-full max-w-[26rem] shadow-lg">
         <CardHeader floated={false} color="blue-gray">
@@ -36,7 +36,7 @@ import {
         <CardBody>
           <div className="mb-3 flex items-center justify-between">
             <Typography variant="h5" color="blue-gray" className="font-medium">
-              Product Name
+              {(product && product.name) ? product.name : 'Product Name'}
             </Typography>
             <Typography
               color="blue-gray"
@@ -58,7 +58,7 @@ import {
             </Typography>
           </div>
           <Typography color="gray">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            {(product && product.description) ? product.description : 'Product Name'}
           </Typography>
         </CardBody>
         <CardFooter className="pt-3">

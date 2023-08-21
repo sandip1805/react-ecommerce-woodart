@@ -3,7 +3,39 @@ import { v4 as uuidv4 } from 'uuid'; // Import the UUID library
 const products = [
     {
       _id: '1',
-      name: 'Wooden Sculpture',
+      name: 'Wooden Sculpture 1',
+      description: 'Beautiful handcrafted wooden sculpture.',
+      price: 100,
+      stockQuantity: 10,
+      category: 'Sculptures',
+      images: ['image1.jpg', 'image2.jpg'],
+      reviews: [
+        {
+          userId: 'user1',
+          rating: 5,
+          comment: 'Absolutely stunning work!'
+        }
+      ]
+    },
+    {
+      _id: '2',
+      name: 'Wooden Sculpture 2',
+      description: 'Beautiful handcrafted wooden sculpture.',
+      price: 100,
+      stockQuantity: 10,
+      category: 'Sculptures',
+      images: ['image1.jpg', 'image2.jpg'],
+      reviews: [
+        {
+          userId: 'user1',
+          rating: 5,
+          comment: 'Absolutely stunning work!'
+        }
+      ]
+    },
+    {
+      _id: '3',
+      name: 'Wooden Sculpture 3',
       description: 'Beautiful handcrafted wooden sculpture.',
       price: 100,
       stockQuantity: 10,

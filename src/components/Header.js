@@ -133,16 +133,16 @@ function NavList() {
       {navListItems.map(({ label, icon, pageUrl }, key) => (
         <Typography
           key={label}
-          as="a"
-          href={pageUrl}
           variant="small"
           color="blue-gray"
           className="font-normal"
         >
-          <MenuItem className="flex items-center gap-2 lg:rounded-full">
-            {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
-            {label}
-          </MenuItem>
+          <Link to={pageUrl}>
+            <MenuItem className="flex items-center gap-2 lg:rounded-full">
+              {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
+              {label}
+            </MenuItem>
+          </Link>
           
         </Typography>
       ))}
@@ -165,12 +165,10 @@ const Header = () => {
   return (
     <Navbar className="sticky top-0 z-10 h-max max-w-full mx-auto p-2 lg:pl-6 rounded-none">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
-        >
-          Ecommerce Woodart
+        <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium" >
+          <Link to="/">
+            Ecommerce Woodart
+          </Link>
         </Typography>
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
