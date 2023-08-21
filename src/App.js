@@ -8,6 +8,7 @@ import Register from './components/Register';
 import Products from './components/Products';
 import ProductDetail from './components/ProductDetails';
 import ContactUs from './components/ContactUs';
+import { Footer } from './components/Footer';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
