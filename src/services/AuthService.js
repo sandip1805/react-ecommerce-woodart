@@ -1,7 +1,7 @@
 const users = new Map();
 
 // Adding the default admin user to the in-memory map
-const defaultAdminEmail = 'admin@example.com';
+const defaultAdminEmail = 'admin@admin.com';
 const defaultAdminPassword = 'admin';
 const defaultAdminName = 'Administrator';
 

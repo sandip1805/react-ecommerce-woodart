@@ -46,7 +46,6 @@ const Login = () => {
     <>
       <div className='grid h-screen justify-center items-center'>
         <Card color="transparent" shadow={false}>
-          <form onSubmit={handleSubmit}></form>
           <Typography variant="h4" color="blue-gray">
             Sign In
           </Typography>
@@ -90,7 +89,7 @@ const Login = () => {
               }
               containerProps={{ className: "-ml-2.5" }}
             />
-            <Button className="mt-6" fullWidth>
+            <Button className="mt-6" fullWidth onClick={handleSubmit}>
               Login
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
