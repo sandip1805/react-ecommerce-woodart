@@ -1,3 +1,4 @@
+import { Button, Card, Input, Textarea, Typography } from '@material-tailwind/react';
 import React, { useState } from 'react';
 
 const ContactUs = () => {
@@ -22,44 +23,59 @@ const ContactUs = () => {
   };
 
   return (
-    <div>
-      <h2>Contact Us</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="message">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Submit</button>
-      </form>
+    <>
+    <div className='grid h-screen justify-center items-center'>
+      <Card color="transparent" shadow={false}>
+        <Typography variant="h4" color="blue-gray">
+          Contact Us
+        </Typography>
+        <Typography color="gray" className="mt-1 font-normal">
+          Enter your details to contact us.
+        </Typography>
+        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
+          <div className="mb-4 flex flex-col gap-6">
+            <Input 
+              size="lg" 
+              label="Name" 
+              type="text"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              id="name"
+              name="name"
+            />
+          </div>
+          <div className="mb-4 flex flex-col gap-6">
+            <Input 
+              size="lg" 
+              label="Email" 
+              type="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              id="email"
+              name="email"
+            />
+          </div>
+          <div className="mb-4 flex flex-col gap-6">
+            <Textarea 
+              size="lg" 
+              label="Message" 
+              type="text"
+              value={formData.message}
+              onChange={handleInputChange}
+              required
+              id="message"
+              name="message"
+            />
+          </div>
+          <Button type='submit' className="mt-6" fullWidth onClick={handleSubmit}>
+            Submit
+          </Button>
+        </form>
+      </Card>
     </div>
+  </>
   );
 };
 
