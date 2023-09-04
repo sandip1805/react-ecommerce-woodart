@@ -15,7 +15,7 @@ const Home = () => {
           <Container className="flex flex-wrap lg:h-screen">
             <div className="flex items-center w-full">
               <div className="max-w-2xl lg:my-0 lg:mb-8 my-10">
-                <Typography variant="h1"  className="lg:text-5xl text-4xl" color="white">Lorem ipsum dolor sit</Typography>
+                <Typography variant="h1" className="lg:text-5xl text-4xl" color="white">Lorem ipsum dolor sit</Typography>
                 <Typography variant="paragraph" className="py-5" color="white">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 </Typography>
