@@ -8,6 +8,7 @@ import {
 } from "@material-tailwind/react";
 import authService from '../services/AuthService';
 import { Link } from 'react-router-dom';
+import toastService from '../services/ToasterService.js';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -15,14 +16,17 @@ const Register = () => {
   const [password, setPassword] = useState('');
 
   const handleRegister = async (e) => {
+    console.log(e);
     e.preventDefault();
 
     try {
       // Call the register function from the authService
       const response = await authService.register(name, email, password);
       console.log(response); // Do something with the response, e.g., show a success message or redirect to another page.
+      toastService.success(response.message);
     } catch (error) {
       console.error(error); // Handle the registration error, e.g., show an error message.
+      toastService.error(error.message);
     }
   };
   return (
@@ -36,9 +40,9 @@ const Register = () => {
         </Typography>
         <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleRegister}>
           <div className="mb-4 flex flex-col gap-6">
-            <Input size="lg" label="Name" value={name} onChange={(e) => setName(e.target.value)} />
-            <Input size="lg" label="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <Input type="password" size="lg" label="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Input required size="lg" label="Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <Input required size="lg" label="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input required type="password" size="lg" label="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
           <Checkbox
             label={
@@ -58,7 +62,7 @@ const Register = () => {
             }
             containerProps={{ className: "-ml-2.5" }}
           />
-          <Button className="mt-6" fullWidth onClick={handleRegister}>
+          <Button type='submit' className="mt-6" fullWidth onClick={handleRegister}>
             Register
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
