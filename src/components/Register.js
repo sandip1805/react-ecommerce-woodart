@@ -34,7 +34,7 @@ const Register = () => {
         <Typography color="gray" className="mt-1 font-normal">
           Enter your details to register.
         </Typography>
-        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleRegister}>
           <div className="mb-4 flex flex-col gap-6">
             <Input size="lg" label="Name" value={name} onChange={(e) => setName(e.target.value)} />
             <Input size="lg" label="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
