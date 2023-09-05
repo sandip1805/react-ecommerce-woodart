@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import authService from '../services/AuthService.js';
+import toastService from '../services/ToasterService.js';
 import {
   Card,
   Input,
@@ -8,13 +9,10 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
-import AlertService from '../services/ToasterService.js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -31,13 +29,11 @@ const Login = () => {
     authService
       .login(email, password)
       .then((response) => {
-        setErrorMessage('');
-        setSuccessMessage(response.message);
+        toastService.success(response.message);
         // Implement any actions after successful login (e.g., redirect to dashboard).
       })
       .catch((error) => {
-        setSuccessMessage('');
-        setErrorMessage(error.message);
+        toastService.error(error.message);
         // Implement error handling (e.g., show error message to the user).
       });
   };
@@ -101,8 +97,6 @@ const Login = () => {
                 Register Here
               </Link>
             </Typography>
-            {errorMessage && <AlertService type={'ERROR'} message={errorMessage}/>}
-            {successMessage && <AlertService type={'SUCCESS'} message={successMessage}/>}
           </form>
         </Card>
       </div>

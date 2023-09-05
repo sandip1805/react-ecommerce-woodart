@@ -1,16 +1,54 @@
-import React from "react";
-import { Alert } from "@material-tailwind/react";
+import { toast } from "react-toastify";
 
-const AlertService = ({type, message}) => {
-  const [open, setOpen] = React.useState(true);
-
-  return (
-    <>
-      <Alert className="alert_box" color={type === 'SUCCESS' ? "green" : type === 'ERROR' ? "red" : type === 'INFO' ? "blue" : type === 'WARNING' ? "amber" : "gray"} open={open} onClose={() => setOpen(false)}>
-        {message}
-      </Alert>
-    </>
-  );
+const toastService = {
+  success: (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  },
+  error: (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  },
+  warning: (message) => {
+    toast.warn(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  },
+  info: (message) => {
+    toast.info(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  },
 }
 
-export default AlertService;
+export default toastService;

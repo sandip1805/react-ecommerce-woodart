@@ -9,11 +9,26 @@ import Products from './components/Products';
 import ProductDetail from './components/ProductDetails';
 import ContactUs from './components/ContactUs';
 import { Footer } from './components/Footer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
     <Router>
       <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        />
+      <ToastContainer />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
