@@ -9,7 +9,7 @@ import {
 import authService from '../services/AuthService';
 import { Link } from 'react-router-dom';
 import toastService from '../services/ToasterService.js';
-import { LoginSocialGoogle } from 'reactjs-social-login';
+import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -19,7 +19,8 @@ const Register = () => {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_GG_APP_ID);
+    console.log("REACT_APP_GG_APP_ID ---> ", process.env.REACT_APP_GG_APP_ID);
+    console.log("REACT_APP_FB_APP_ID ---> ", process.env.REACT_APP_FB_APP_ID);
     console.log(profile);
     console.log(provider);
   }, [profile, provider]);
@@ -85,7 +86,14 @@ const Register = () => {
             </Link>
           </Typography>
         </form>
-        <div className="flex flex-col items-center gap-4">
+        <div
+            className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-black after:mt-0.5 after:flex-1 after:border-t after:border-black">
+            <p
+              className="mx-4 mb-0 text-center font-semibold dark:text-white">
+              Or
+            </p>
+          </div>
+        <div className="flex justify-center items-center gap-4">
           <LoginSocialGoogle
             isOnlyGetToken
             client_id={process.env.REACT_APP_GG_APP_ID || ''}
@@ -106,6 +114,26 @@ const Register = () => {
               <img src="/img/icons/google.svg" alt="metamask" className="h-6 w-6" />
             </Button>
           </LoginSocialGoogle>
+          <LoginSocialFacebook
+            isOnlyGetToken
+            appId={process.env.REACT_APP_FB_APP_ID || ''}
+            onResolve={({ provider, data }) => {
+              setProvider(provider)
+              setProfile(data)
+            }}
+            onReject={(err) => {
+              console.log(err)
+            }}
+          >
+            <Button
+              size="lg"
+              variant="outlined"
+              color="blue-gray"
+              className="flex items-center gap-3"
+            >
+              <img src="/img/icons/facebook.svg" alt="metamask" className="h-6 w-6" />
+            </Button>
+          </LoginSocialFacebook>
         </div>
       </Card>
     </div>
