@@ -11,6 +11,7 @@ import ContactUs from './components/ContactUs';
 import { Footer } from './components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from './components/Profile';
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
         <Footer />
       </div>

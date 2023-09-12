@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Card,
   Input,
@@ -9,11 +9,20 @@ import {
 import authService from '../services/AuthService';
 import { Link } from 'react-router-dom';
 import toastService from '../services/ToasterService.js';
+import { LoginSocialGoogle } from 'reactjs-social-login';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [provider, setProvider] = useState('');
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    console.log(process.env.REACT_APP_GG_APP_ID);
+    console.log(profile);
+    console.log(provider);
+  }, [profile, provider]);
 
   const handleRegister = async (e) => {
     console.log(e);
@@ -29,6 +38,7 @@ const Register = () => {
       toastService.error(error.message);
     }
   };
+
   return (
     <div className='grid h-screen justify-center items-center'>
       <Card color="transparent" shadow={false}>
@@ -75,6 +85,28 @@ const Register = () => {
             </Link>
           </Typography>
         </form>
+        <div className="flex flex-col items-center gap-4">
+          <LoginSocialGoogle
+            isOnlyGetToken
+            client_id={process.env.REACT_APP_GG_APP_ID || ''}
+            onResolve={({ provider, data }) => {
+              setProvider(provider);
+              setProfile(data);
+            }}
+            onReject={(err) => {
+              console.log(err)
+            }}
+          >
+            <Button
+              size="lg"
+              variant="outlined"
+              color="blue-gray"
+              className="flex items-center gap-3"
+            >
+              <img src="/img/icons/google.svg" alt="metamask" className="h-6 w-6" />
+            </Button>
+          </LoginSocialGoogle>
+        </div>
       </Card>
     </div>
   );
