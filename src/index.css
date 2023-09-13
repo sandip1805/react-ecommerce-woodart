@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    /* overflow: hidden; */
+.input_field_error {
+    margin-top: 5px;
+}
+
+.terms_and_condition_div .input_field_error{
+    margin-top: 0px;
+}
+
+.terms_and_condition {
+    padding: 0 0.75rem;
+}
+
+.login_register_shadow {
+    box-shadow: 0 4px 6px 1px rgb(0 0 0 / 20%), 0 2px 4px 0px rgb(0 0 0 / 0.1);
 }
