@@ -10,6 +10,7 @@ import {
   MenuItem,
   Avatar,
   IconButton,
+  Badge,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -21,7 +22,9 @@ import {
   PhoneIcon,
   LockClosedIcon
 } from "@heroicons/react/24/outline";
+import { HomeIcon } from "@heroicons/react/24/solid";
 import { Link } from 'react-router-dom';
+import { CartItems } from '../services/CartService';
 
 // profile menu component
 const profileMenuItems = [
@@ -63,7 +66,7 @@ function ProfileMenu() {
         <Button
           variant="text"
           color="blue-gray"
-          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-4"
         >
           <Avatar
             variant="circular"
@@ -151,14 +154,23 @@ function NavList() {
 
 const Header = () => {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
+  const [cartItemsCount, setCartItemsCount] = React.useState(0);
  
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
  
   React.useEffect(() => {
+    const cartObservable = CartItems.subscribe((res) => {
+      setCartItemsCount(
+        res.length > 0
+          ? res.reduce((a, c) => a + c.cartQuantity, 0)
+          : 0
+      );
+    });
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false),
     );
+    return () => cartObservable.unsubscribe();
   }, []);
  
   return (
@@ -172,16 +184,27 @@ const Header = () => {
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
         </div>
-        <IconButton
-          size="sm"
-          color="blue-gray"
-          variant="text"
-          onClick={toggleIsNavOpen}
-          className="ml-auto mr-2 lg:hidden"
-        >
-          <Bars2Icon className="h-6 w-6" />
-        </IconButton>
-        <ProfileMenu />
+        <div className='flex items-center lg:ml-auto'>
+          <Badge content={cartItemsCount} withBorder className='text-white bg-red'>
+            <IconButton>
+              <img
+                className="h-25"
+                src="/img/icons/icon-cart-white.svg"
+                alt="cart-icon"
+              />
+            </IconButton>
+          </Badge>
+          <IconButton
+            size="sm"
+            color="blue-gray"
+            variant="text"
+            onClick={toggleIsNavOpen}
+            className="ml-auto mr-2 lg:hidden"
+          >
+            <Bars2Icon className="h-6 w-6" />
+          </IconButton>
+          <ProfileMenu />
+        </div>
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />

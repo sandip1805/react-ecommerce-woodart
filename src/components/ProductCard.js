@@ -2,9 +2,7 @@ import {
     Card,
     CardHeader,
     CardBody,
-    CardFooter,
     Typography,
-    Button,
     IconButton,
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
@@ -68,11 +66,6 @@ import { Link } from "react-router-dom";
             {(product && product.description) ? product.description : 'Product Name'}
           </Typography>
         </CardBody>
-        <CardFooter className="pt-3">
-          <Button size="lg" fullWidth={true}>
-            Add To Cart
-          </Button>
-        </CardFooter>
       </Card>
     );
   }

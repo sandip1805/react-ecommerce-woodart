@@ -1,18 +1,46 @@
 // ProductDetail.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProductService } from '../services/ProductService';
+import { CartItems, CartService } from '../services/CartService';
 import { Button, Chip, Typography } from '@material-tailwind/react';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const product = ProductService.getProductById(Number(id));
-  console.log(product);
+  const [cartItems, setCartItems] = useState([]);
 
   const [value, setValue] = useState(0);
   const [largeImage, setLargeImage] = useState(product.primary_image);
   const [modal, setModal] = useState(true);
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
+
+  useEffect(() => {
+    const cartObservable = CartItems.subscribe((cartItems) => {
+      console.log(cartItems);
+      setCartItems(cartItems);
+    });
+    return () => cartObservable.unsubscribe();
+  }, []);
+  
+  const handleAddCart = () => {
+    let finalValue = [];
+    const existItem = cartItems.find(
+      (item) => item._id === product._id
+    );
+    if (existItem) {
+      const existItemIndex = cartItems.findIndex(
+        (item) => item._id === product._id
+      );
+      cartItems[existItemIndex].cartQuantity = (cartItems[existItemIndex].cartQuantity + qty);
+      finalValue = [...cartItems];
+    }
+    else {
+      product.cartQuantity = qty;
+      finalValue = [...cartItems, product];
+    }
+    CartService.addCartItem(finalValue);
+  }
 
   const fixedPrice = product.price.toFixed(2);
 
@@ -182,7 +210,7 @@ const ProductDetail = () => {
                 +
               </button>
             </div>
-            <Button className="add-btn border-none rounded-lg text-white font-[700] px-[70px] py-[18px] mt-4 md:mt-0 md:py-0 md:text-[14px] transition-all btn-shadow">
+            <Button className="add-btn border-none rounded-lg text-white font-[700] px-[70px] py-[18px] mt-4 md:mt-0 md:py-0 md:text-[14px] transition-all btn-shadow" onClick={handleAddCart}>
               <img
                 className="inline-block -translate-x-2 -translate-y-[2px] h-[15px]"
                 src="/img/icons/icon-cart-white.svg"
