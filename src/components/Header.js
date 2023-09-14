@@ -184,16 +184,18 @@ const Header = () => {
         <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
           <NavList />
         </div>
-        <div className='flex items-center lg:ml-auto'>
-          <Badge content={cartItemsCount} withBorder className='text-white bg-red'>
-            <IconButton>
-              <img
-                className="h-25"
-                src="/img/icons/icon-cart-white.svg"
-                alt="cart-icon"
-              />
-            </IconButton>
-          </Badge>
+        <div className='flex items-center ml-auto'>
+          <Link to={'/cart'}>
+            <Badge content={cartItemsCount} withBorder className='text-white bg-red'>
+              <IconButton>
+                <img
+                  className="h-25"
+                  src="/img/icons/icon-cart-white.svg"
+                  alt="cart-icon"
+                />
+              </IconButton>
+            </Badge>
+          </Link>
           <IconButton
             size="sm"
             color="blue-gray"
