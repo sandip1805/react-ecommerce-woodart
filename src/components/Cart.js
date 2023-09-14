@@ -65,7 +65,7 @@ const Cart = () => {
                     alt={
                       product && product?.name ? product?.name : "Product Name"
                     }
-                    className="w-full rounded-lg sm:w-40 w-80 h-24"
+                    className="w-full rounded-lg sm:w-40 w-80 h-24 object-cover object-center"
                     style={{ minWidth: "80px" }}
                   />
                   <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">

@@ -34,7 +34,7 @@ const Checkout = () => {
               </Tab>
           </TabsHeader>
           <TabsBody>
-              <TabPanel value="shipping" className="flex justify-between">
+              <TabPanel value="shipping" className="flex justify-between p-2 py-8">
                  <ShippingInfo shippingCallback={handleShippingCallBack}/>
               </TabPanel>
               <TabPanel value="payment">

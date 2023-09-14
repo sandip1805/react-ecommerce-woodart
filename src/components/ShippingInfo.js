@@ -35,11 +35,11 @@ const ShippingInfo = (props) => {
 
   return (
     <>
-      <div className="flex justify-between w-full gap-10">
+      <div className="flex justify-between w-full gap-10 flex-col lg:flex-row">
         <Card
           color="transparent"
           shadow={false}
-          className="lg:p-12 p-8 login_register_shadow lg:mt-20 w-full"
+          className="lg:p-12 p-6 login_register_shadow lg:mt-20 w-full"
         >
           <Typography variant="h4" color="blue-gray" className="text-center">
             Shipping Address
@@ -117,7 +117,7 @@ const ShippingInfo = (props) => {
         <Card
           color="transparent"
           shadow={false}
-          className="lg:p-12 p-8 login_register_shadow lg:mt-20 w-full"
+          className="lg:p-12 p-6 login_register_shadow lg:mt-20 w-full"
         >
           <Typography variant="h4" color="blue-gray" className="text-center">
             Order Summary
@@ -125,13 +125,12 @@ const ShippingInfo = (props) => {
           {cartItems.map((product, index) => (
               <div
                 key={product._id}
-                product={product}
                 className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
               >
                 <img
                   src={"/img/" + product?.primary_image}
                   alt={product && product?.name ? product?.name : "Product Name"}
-                  className="w-full rounded-lg sm:w-40 w-80 h-24"
+                  className="w-full rounded-lg sm:w-40 w-80 h-24 object-cover object-center"
                   style={{ minWidth: "80px" }}
                 />
                 <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
