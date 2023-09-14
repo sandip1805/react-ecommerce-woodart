@@ -14,6 +14,10 @@ const Checkout = () => {
     return () => cartObservable.unsubscribe();
   }, []);
 
+  const handleShippingCallBack = (data) => {
+    console.log(data);
+  }
+
   return (
     <>
       <Container className="flex flex-wrap lg:h-screen">
@@ -30,8 +34,8 @@ const Checkout = () => {
               </Tab>
           </TabsHeader>
           <TabsBody>
-              <TabPanel value="shipping" className="flex justify-center">
-                 <ShippingInfo />
+              <TabPanel value="shipping" className="flex justify-between">
+                 <ShippingInfo shippingCallback={handleShippingCallBack}/>
               </TabPanel>
               <TabPanel value="payment">
                 Payment Content
