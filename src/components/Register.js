@@ -11,6 +11,7 @@ import toastService from "../services/ToasterService.js";
 import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 const Register = () => {
   const [provider, setProvider] = useState("");
@@ -189,30 +190,30 @@ const Register = () => {
               />
             </Button>
           </LoginSocialGoogle>
-          <LoginSocialFacebook
-            isOnlyGetToken
+          <FacebookLogin
             appId={process.env.REACT_APP_FB_APP_ID || ""}
-            onResolve={({ provider, data }) => {
-              setProvider(provider);
-              setProfile(data);
-            }}
-            onReject={(err) => {
-              console.log(err);
-            }}
+            autoLoad={true}
+            fields="name,email,picture"
+            callback={(response) => {
+              console.log(response);
+            }} 
+            render={renderProps => (
+              <Button
+                onClick={renderProps.onClick}
+                size="lg"
+                variant="outlined"
+                color="blue-gray"
+                className="flex items-center gap-3"
+              >
+                <img
+                  src="/img/icons/facebook.svg"
+                  alt="metamask"
+                  className="h-6 w-6"
+                />
+              </Button>
+            )}
           >
-            <Button
-              size="lg"
-              variant="outlined"
-              color="blue-gray"
-              className="flex items-center gap-3"
-            >
-              <img
-                src="/img/icons/facebook.svg"
-                alt="metamask"
-                className="h-6 w-6"
-              />
-            </Button>
-          </LoginSocialFacebook>
+          </FacebookLogin>
         </div>
       </Card>
     </div>

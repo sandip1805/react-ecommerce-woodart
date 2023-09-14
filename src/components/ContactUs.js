@@ -22,11 +22,11 @@ const ContactUs = () => {
   return (
     <>
     <div className='grid h-screen justify-center items-center'>
-      <Card color="transparent" shadow={false}>
-        <Typography variant="h4" color="blue-gray">
+      <Card color="transparent" shadow={false} className="p-12 login_register_shadow">
+        <Typography variant="h4" color="blue-gray" className="text-center">
           Contact Us
         </Typography>
-        <Typography color="gray" className="mt-1 font-normal">
+        <Typography color="gray" className="mt-1 font-normal text-center">
           Enter your details to contact us.
         </Typography>
         <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit(handleContactSubmit)}>

@@ -173,7 +173,7 @@ const ProductDetail = () => {
         </div>
 
         <div className="description p-6 md:basis-1/2 md:py-[40px]">
-          <Typography variant="h6" color="blue" textGradient className="uppercase mb-4">
+          <Typography variant="h6" color="blue" textGradient className="uppercase mb-4 font-[500]">
             {product.category}
           </Typography>
           <h1 className="text-3xl md:text-4xl capitalize font-[700] mb-4">

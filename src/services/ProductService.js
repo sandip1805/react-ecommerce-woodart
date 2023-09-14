@@ -16,7 +16,8 @@ const products = [
           rating: 5,
           comment: 'Absolutely stunning work!'
         }
-      ]
+      ],
+      favourite: false
     },
     {
       _id: 2,
@@ -33,7 +34,8 @@ const products = [
           rating: 5,
           comment: 'Absolutely stunning work!'
         }
-      ]
+      ],
+      favourite: false
     },
     {
       _id: 3,
@@ -50,7 +52,8 @@ const products = [
           rating: 5,
           comment: 'Absolutely stunning work!'
         }
-      ]
+      ],
+      favourite: false
     },
     // Add more product objects here
   ];

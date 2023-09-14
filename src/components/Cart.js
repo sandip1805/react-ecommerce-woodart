@@ -147,9 +147,11 @@ const Cart = () => {
                   <p className="mb-1 text-lg font-bold">${totalAmount}</p>
                 </div>
               </div>
-              <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-                Check out
-              </button>
+              <Link to={'/checkout'}>
+                <Button className="mt-6 w-full rounded-md font-medium">
+                  Check out
+                </Button>
+              </Link>
             </div>
           </div>
         ) : (
