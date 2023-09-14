@@ -9,13 +9,13 @@ import { Link } from "react-router-dom";
    
   export function ProductCard({product}) {
     return (
-      <Card className="w-full max-w-[26rem] shadow-lg">
+      <Card className="w-full max-w-[26rem] login_register_shadow">
         <Link to={`/products/${product._id}`}>
-          <CardHeader floated={false} color="blue-gray">
+          <CardHeader floated={false} color="blue-gray shadow-none">
             <img
               src={'/img/' + product.primary_image}
               alt={(product && product.name) ? product.name : 'Product Name'}
-              className="h-96 w-full object-cover object-center"
+              className="h-80 w-full object-cover object-center"
             />
             <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
             <IconButton

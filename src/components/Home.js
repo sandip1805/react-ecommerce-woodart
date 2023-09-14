@@ -37,7 +37,7 @@ const Home = () => {
         <div className="flex justify-center w-full">
           <Typography variant="h1" className="lg:text-5xl text-4xl">Best Sellers</Typography>
         </div>
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 lg:pt-4'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-12 lg:pt-4'>
           {products.map(product => (
               <ProductCard key={product._id} product={product}/>
           ))}
