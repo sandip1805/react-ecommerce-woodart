@@ -198,14 +198,14 @@ const ProductDetail = () => {
             <div className="state w-[100%] flex justify-around md:justify-center items-center space-x-10 bg-blue-50 rounded-lg p-3 md:p-2 md:mr-4 md:w-[150px]">
               <button
                 onClick={decrease}
-                className="minus text-[24px] md:text-[20px] font-[700] text-orange transition-all hover:opacity-50"
+                className="minus text-[24px] md:text-[20px] font-[700] text-orange transition-all"
               >
                 -
               </button>
               <p className="md:text-[14px] font-bold">{qty}</p>
               <button
                 onClick={() => setQty((prev) => prev + 1)}
-                className="plus text-[24px] md:text-[20px] font-[700] text-orange transition-all hover:opacity-50"
+                className="plus text-[24px] md:text-[20px] font-[700] text-orange transition-all"
               >
                 +
               </button>

@@ -8,7 +8,7 @@ import {
 import authService from "../services/AuthService";
 import { Link } from "react-router-dom";
 import toastService from "../services/ToasterService.js";
-import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
+import { LoginSocialGoogle } from "reactjs-social-login";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
@@ -52,7 +52,7 @@ const Register = () => {
   return (
     <div className="grid h-screen justify-center items-center">
       <Card color="transparent" className="p-12 login_register_shadow">
-        <Typography variant="h4" color="blue-gray" className="text-center">
+        <Typography variant="h4" className="text-center text-black">
           Sign Up
         </Typography>
         <Typography color="gray" className="mt-1 font-normal text-center">
@@ -180,8 +180,7 @@ const Register = () => {
             <Button
               size="lg"
               variant="outlined"
-              color="blue-gray"
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 border-black"
             >
               <img
                 src="/img/icons/google.svg"
@@ -192,18 +191,17 @@ const Register = () => {
           </LoginSocialGoogle>
           <FacebookLogin
             appId={process.env.REACT_APP_FB_APP_ID || ""}
-            autoLoad={true}
+            autoLoad={false}
             fields="name,email,picture"
             callback={(response) => {
               console.log(response);
             }} 
-            render={renderProps => (
+            render={(renderProps) => (
               <Button
                 onClick={renderProps.onClick}
                 size="lg"
                 variant="outlined"
-                color="blue-gray"
-                className="flex items-center gap-3"
+                className="flex items-center gap-3 border-black"
               >
                 <img
                   src="/img/icons/facebook.svg"

@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
     return (
       <Card className="w-full max-w-[26rem] login_register_shadow">
         <Link to={`/products/${singleProduct._id}`}>
-          <CardHeader floated={false} color="blue-gray shadow-none" className="lg:mt-4">
+          <CardHeader floated={false} className="lg:mt-4">
             <img
               src={'/img/' + singleProduct.primary_image}
               alt={(singleProduct && singleProduct.name) ? singleProduct.name : 'Product Name'}
@@ -51,12 +51,11 @@ import { Link } from "react-router-dom";
         <CardBody>
           <div className="mb-3 flex items-center justify-between">
             <Link to={`/products/${singleProduct._id}`}>
-              <Typography variant="h5" color="blue-gray" className="font-medium">
+              <Typography variant="h5" className="font-medium text-black">
                 {(singleProduct && singleProduct.name) ? singleProduct.name : 'Product Name'}
               </Typography>
             </Link>
             <Typography
-              color="blue-gray"
               className="flex items-center gap-1.5 font-normal"
             >
               <svg

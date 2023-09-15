@@ -10,7 +10,6 @@ import {
   MenuItem,
   Avatar,
   IconButton,
-  Badge,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -22,7 +21,6 @@ import {
   PhoneIcon,
   LockClosedIcon
 } from "@heroicons/react/24/outline";
-import { HomeIcon } from "@heroicons/react/24/solid";
 import { Link } from 'react-router-dom';
 import { CartItems } from '../services/CartService';
 
@@ -65,7 +63,6 @@ function ProfileMenu() {
       <MenuHandler>
         <Button
           variant="text"
-          color="blue-gray"
           className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-4"
         >
           <Avatar
@@ -136,8 +133,7 @@ function NavList() {
         <Typography
           key={label}
           variant="small"
-          color="blue-gray"
-          className="font-normal"
+          className="font-normal text-black"
         >
           <Link to={pageUrl}>
             <MenuItem className="flex items-center gap-2 lg:rounded-full">
@@ -174,9 +170,9 @@ const Header = () => {
   }, []);
  
   return (
-    <Navbar className="sticky top-0 z-10 h-max max-w-full mx-auto p-2 lg:pl-6 rounded-none">
-      <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium" >
+    <Navbar className="sticky top-0 z-50 h-max max-w-full mx-auto p-2 lg:pl-6 rounded-none">
+      <div className="relative mx-auto flex items-center">
+        <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium text-black" >
           <Link to="/">
             Ecommerce Woodart
           </Link>
@@ -186,19 +182,19 @@ const Header = () => {
         </div>
         <div className='flex items-center ml-auto'>
           <Link to={'/cart'}>
-            <Badge content={cartItemsCount} withBorder className='text-white bg-red'>
-              <IconButton>
-                <img
-                  className="h-25"
-                  src="/img/icons/icon-cart-white.svg"
-                  alt="cart-icon"
-                />
-              </IconButton>
-            </Badge>
+            <Button className="flex items-center relative header_cart_btn">
+              <span className="absolute -top-2 -right-2 rounded-full bg-red px-2 py-1 text-xs font-bold text-cream z-10">
+                {cartItemsCount}
+              </span>
+              <img
+                className="h-25"
+                src="/img/icons/icon-cart-white.svg"
+                alt="cart-icon"
+              />
+            </Button>
           </Link>
           <IconButton
             size="sm"
-            color="blue-gray"
             variant="text"
             onClick={toggleIsNavOpen}
             className="ml-auto mr-2 lg:hidden"

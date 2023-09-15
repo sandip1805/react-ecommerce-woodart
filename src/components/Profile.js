@@ -13,9 +13,9 @@ const Profile = () => {
         <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('https://images.unsplash.com/photo-1448932223592-d1fc686e76ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80')] bg-cover bg-center" />
         <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
       </section>
-      <section className="relative bg-blue-gray-50/50 py-16 px-4">
+      <section className="relative py-16 px-4">
         <Container className="flex flex-wrap lg:py-20 py-10">
-          <div className="relative mb-6 -mt-64 flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
+          <div className="relative mb-6 -mt-64 flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/2">
             <div className="px-6">
               <div className="flex flex-wrap justify-center">
                 <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
@@ -40,14 +40,13 @@ const Profile = () => {
                     <div className="mr-4 p-3 text-center">
                       <Typography
                         variant="lead"
-                        color="blue-gray"
                         className="font-bold uppercase"
                       >
                         22
                       </Typography>
                       <Typography
                         variant="small"
-                        className="font-normal text-blue-gray-500"
+                        className="font-normal"
                       >
                         Friends
                       </Typography>
@@ -55,14 +54,13 @@ const Profile = () => {
                     <div className="mr-4 p-3 text-center">
                       <Typography
                         variant="lead"
-                        color="blue-gray"
                         className="font-bold uppercase"
                       >
                         10
                       </Typography>
                       <Typography
                         variant="small"
-                        className="font-normal text-blue-gray-500"
+                        className="font-normal"
                       >
                         Photos
                       </Typography>
@@ -70,14 +68,13 @@ const Profile = () => {
                     <div className="p-3 text-center lg:mr-4">
                       <Typography
                         variant="lead"
-                        color="blue-gray"
                         className="font-bold uppercase"
                       >
                         89
                       </Typography>
                       <Typography
                         variant="small"
-                        className="font-normal text-blue-gray-500"
+                        className="font-normal"
                       >
                         Comments
                       </Typography>
@@ -86,7 +83,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="my-8 text-center">
-                <Typography variant="h2" color="blue-gray" className="mb-2">
+                <Typography variant="h2" className="mb-2">
                   Jenna Stones
                 </Typography>
                 <div className="mb-16 flex items-center justify-center gap-2">
