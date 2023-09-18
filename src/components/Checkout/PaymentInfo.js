@@ -215,7 +215,7 @@ const PaymentInfo = (props) => {
               </div>
             </div>
             <div className="mb-4 flex flex-row gap-4">
-              <div className="w-1/2">
+              <div className="w-1/2 expiry_date_input">
                 <MaskedInput
                   mask={EXPIRYDATE}
                   guide={false}
@@ -242,7 +242,7 @@ const PaymentInfo = (props) => {
                   )}
                 </span>
               </div>
-              <div className="w-1/2">
+              <div className="w-1/2 expiry_date_input">
                 <MaskedInput
                   mask={CVC}
                   guide={false}

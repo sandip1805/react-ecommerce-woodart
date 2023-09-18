@@ -4,6 +4,7 @@ import {  Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/r
 import Container from "../Container";
 import ShippingInfo from "./ShippingInfo";
 import PaymentInfo from "./PaymentInfo";
+import PaymentConfirmation from "./PaymentConfirmation";
 
 const Checkout = () => {
   const [activeTabValue, setActiveTabValue] = useState("shipping");
@@ -45,7 +46,7 @@ const Checkout = () => {
               <Tab disabled={(activeTabValue !== 'payment') && !isAddressCompleted} value="payment" onClick={() => setActiveTabValue("payment")} id="payment_tab">
                 Payment
               </Tab>
-              <Tab disabled={(activeTabValue !== 'confirmation') && !isAddressCompleted && !isPaymentCompleted} value="confirmation" onClick={() => setActiveTabValue("confirmation")} id="confirmation_tab">
+              <Tab disabled={!isAddressCompleted || !isPaymentCompleted} value="confirmation" onClick={() => setActiveTabValue("confirmation")} id="confirmation_tab">
                 Confirmation
               </Tab>
           </TabsHeader>
@@ -57,7 +58,7 @@ const Checkout = () => {
               <PaymentInfo paymentCallback={handlePaymentCallBack}/>
             </TabPanel>
             <TabPanel value="confirmation">
-              Confirmation Content
+              <PaymentConfirmation />
             </TabPanel>
           </TabsBody>
         </Tabs>
