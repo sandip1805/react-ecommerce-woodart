@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Navbar,
   Collapse,
@@ -10,6 +10,9 @@ import {
   MenuItem,
   Avatar,
   IconButton,
+  Popover,
+  PopoverHandler,
+  PopoverContent,
 } from "@material-tailwind/react";
 import {
   UserCircleIcon,
@@ -23,40 +26,56 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link } from 'react-router-dom';
 import { CartItems } from '../services/CartService';
+import { User } from '../services/AuthService';
 
 // profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-    pageUrl: '/profile'
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-    pageUrl: '/edit-profile'
-  },
-  {
-    label: "Register",
-    icon: LockClosedIcon,
-    pageUrl: '/register'
-  },
-  {
-    label: "Login",
-    icon: LockClosedIcon,
-    pageUrl: '/login'
-  },
-  {
-    label: "Logout",
-    icon: PowerIcon,
-    pageUrl: '/logout'
-  },
-];
  
-function ProfileMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+function ProfileMenu(props) {
+  const [profileMenuItems, setProfileMenuItems] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
  
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    if (props.authorized) {
+      const menuItems = [
+        {
+          label: "My Profile",
+          icon: UserCircleIcon,
+          pageUrl: '/profile'
+        },
+        {
+          label: "Edit Profile",
+          icon: Cog6ToothIcon,
+          pageUrl: '/edit-profile'
+        },
+        {
+          label: "Logout",
+          icon: PowerIcon,
+          pageUrl: '/logout'
+        },
+      ]
+      setProfileMenuItems(menuItems);
+    } else {
+      const menuItems = [
+        {
+          label: "Register",
+          icon: LockClosedIcon,
+          pageUrl: '/register'
+        },
+        {
+          label: "Login",
+          icon: LockClosedIcon,
+          pageUrl: '/login'
+        },
+      ]
+      setProfileMenuItems(menuItems);
+    }
+  }, [props]);
+
+  const handleLogOut = (e) => {
+    User.next(null);
+  }
  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -82,27 +101,24 @@ function ProfileMenu() {
       </MenuHandler>
       <MenuList className="p-1">
         {profileMenuItems.map(({ label, icon, pageUrl }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
+          const isLogoutItem = (label === 'Logout');
           return (
             <MenuItem
               key={label}
               onClick={closeMenu}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
+              className={`flex items-center gap-2 rounded`}
             >
               {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                className: `h-4 w-4 ${isLogoutItem ? "text-red font-black" : ""}`,
                 strokeWidth: 2,
               })}
               <Typography
                 variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
+                className={`font-normal ${isLogoutItem ? "text-red font-medium" : ""}`}
               >   
-                <Link to={pageUrl}>{label}</Link>            
+                {
+                  label !== 'Logout' ? (<Link to={pageUrl}>{label}</Link>) : (<span onClick={() => handleLogOut()}>{label}</span>)
+                }        
               </Typography>
             </MenuItem>
           );
@@ -149,12 +165,14 @@ function NavList() {
 }
 
 const Header = () => {
-  const [isNavOpen, setIsNavOpen] = React.useState(false);
-  const [cartItemsCount, setCartItemsCount] = React.useState(0);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [authorized, setAuthorized] = useState(false);
+  const [openPopover, setOpenPopover] = useState(false);
  
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
  
-  React.useEffect(() => {
+  useEffect(() => {
     const cartObservable = CartItems.subscribe((res) => {
       setCartItemsCount(
         res.length > 0
@@ -166,8 +184,25 @@ const Header = () => {
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false),
     );
-    return () => cartObservable.unsubscribe();
-  }, []);
+    const userObservable = User.subscribe((res) => {
+      console.log(res);
+      if (res) {
+        setAuthorized(true);
+      }
+      else {
+        setAuthorized(false);
+      }
+    });
+    return () => {
+      userObservable.unsubscribe();
+      cartObservable.unsubscribe();
+    };
+  }, [authorized]);
+
+  const triggers = {
+    onMouseEnter: () => setOpenPopover(true),
+    onMouseLeave: () => setOpenPopover(false),
+  };
  
   return (
     <Navbar className="sticky top-0 z-50 h-max max-w-full mx-auto p-2 lg:pl-6 rounded-none">
@@ -181,18 +216,47 @@ const Header = () => {
           <NavList />
         </div>
         <div className='flex items-center ml-auto'>
-          <Link to={'/cart'}>
-            <Button className="flex items-center relative header_cart_btn">
-              <span className="absolute -top-2 -right-2 rounded-full bg-red px-2 py-1 text-xs font-bold text-cream z-10">
-                {cartItemsCount}
-              </span>
-              <img
-                className="h-25"
-                src="/img/icons/icon-cart-white.svg"
-                alt="cart-icon"
-              />
-            </Button>
-          </Link>
+          {
+            authorized ? (
+              <Link to={'/cart'}>
+                <Button className="flex items-center relative header_cart_btn">
+                  <span className="absolute -top-2 -right-2 rounded-full bg-red px-2 py-1 text-xs font-bold text-cream z-10">
+                    {cartItemsCount}
+                  </span>
+                  <img
+                    className="h-25"
+                    src="/img/icons/icon-cart-white.svg"
+                    alt="cart-icon"
+                  />
+                </Button>
+              </Link>
+            ) : (
+              <Popover open={openPopover} handler={setOpenPopover}>
+                <PopoverHandler {...triggers}>
+                  <Button className="flex items-center relative header_cart_btn">
+                    <span className="absolute -top-2 -right-2 rounded-full bg-red px-2 py-1 text-xs font-bold text-cream z-10">
+                      {cartItemsCount}
+                    </span>
+                    <img
+                      className="h-25"
+                      src="/img/icons/icon-cart-white.svg"
+                      alt="cart-icon"
+                    />
+                  </Button>
+                </PopoverHandler>
+                <PopoverContent {...triggers} className="z-50 max-w-[26rem]">
+                  <Typography variant="h6" color="gray" className="font-normal">
+                    Login is required to access cart items.
+                  </Typography>
+                  <div className="mt-4 flex justify-end">
+                    <Link to={'/login'}>
+                      <Button>Login</Button>
+                    </Link>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )
+          }
           <IconButton
             size="sm"
             variant="text"
@@ -201,7 +265,7 @@ const Header = () => {
           >
             <Bars2Icon className="h-6 w-6" />
           </IconButton>
-          <ProfileMenu />
+          <ProfileMenu authorized={authorized}/>
         </div>
       </div>
       <Collapse open={isNavOpen} className="overflow-scroll">

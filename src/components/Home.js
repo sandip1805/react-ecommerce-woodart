@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from './Container';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-tailwind/react';
@@ -7,6 +7,10 @@ import { ProductService } from '../services/ProductService';
 
 const Home = () => {
   const products = ProductService.getAllProducts().slice(0, 3);
+  
+  useEffect(() => {
+    document.title = 'Ecommerce Woodart';
+  });
 
   return (
     <>

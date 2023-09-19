@@ -1,12 +1,28 @@
 import { Avatar, Button, Typography } from "@material-tailwind/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   MapPinIcon,
 } from "@heroicons/react/24/solid";
 import Container from "./Container";
 import { Link } from "react-router-dom";
+import { User } from "../services/AuthService";
 
 const Profile = () => {
+  const [userDetails, setUserDetails] = useState(null);
+
+  useEffect(() => {
+    console.log("JJKSHKDHS")
+    const userObservable = User.subscribe((res) => {
+      console.log(res);
+      if (res) {
+        setUserDetails(res);
+      }
+    });
+    return () => {
+      userObservable.unsubscribe();
+    };
+  }, [userDetails]);
+
   return (
     <>
       <section className="relative block h-[50vh]">

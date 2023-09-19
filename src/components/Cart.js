@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { CartItems, CartService } from "../services/CartService";
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useHref, useNavigate } from "react-router-dom";
+import authService from "../services/AuthService";
 
 const Cart = () => {
+  const routeUrl = useHref();
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [shippingFee, setShippingFee] = useState(5);
   const [totalAmount, setTotalAmount] = useState(5);
 
   useEffect(() => {
+    console.log(routeUrl);
+    authService
+    .authCheck(routeUrl)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      navigate({
+        pathname: '/login',
+        search: `returnUrl=${routeUrl}`
+      });
+    });
     const cartObservable = CartItems.subscribe((cartItems) => {
       setShippingFee(5);
       updateCartValue(cartItems);

@@ -1,5 +1,5 @@
-import React from 'react';
-import authService from '../services/AuthService.js';
+import React, { useEffect } from 'react';
+import authService, { User } from '../services/AuthService.js';
 import toastService from '../services/ToasterService.js';
 import {
   Card,
@@ -8,7 +8,7 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
@@ -18,6 +18,15 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(document.location.search);
+
+  useEffect(() => {
+    if (User.value) {
+      navigate('/');
+    }
+    console.log(searchParams.get('returnUrl'));
+  })
 
   const handleLogin = ({email, password}) => {
     console.log('Email:', email);
@@ -26,6 +35,14 @@ const Login = () => {
       .login(email, password)
       .then((response) => {
         toastService.success(response.message);
+        setTimeout(() => {
+          if (searchParams.get('returnUrl')) {
+            navigate(searchParams.get('returnUrl'));
+          }
+          else {
+            navigate('/');
+          }
+        }, 3000);
         // Implement any actions after successful login (e.g., redirect to dashboard).
       })
       .catch((error) => {

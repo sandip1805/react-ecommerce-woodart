@@ -1,5 +1,5 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
-import React from "react";
+import React, { useReducer, useState } from "react";
 import {
   AMERICANEXPRESS,
   OTHERCARDS,
@@ -7,14 +7,14 @@ import {
   CVC,
   CARDARR,
   CARDICON,
-} from "../../constant";
+} from "../../utils/constant";
 import MaskedInput from "react-text-mask";
 import {
   stripeCardNumberValidation,
   stripeCardExpirValidation,
   textWithSpacesOnly,
   minLength,
-} from "../../validations";
+} from "../../utils/validations";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -49,9 +49,9 @@ function findDebitCardType(cardNumber) {
 }
 
 const PaymentInfo = (props) => {
-  const [error, setError] = React.useState({});
-  const [cardType, setCardType] = React.useState();
-  const [state, dispatch] = React.useReducer(reducer, {
+  const [error, setError] = useState({});
+  const [cardType, setCardType] = useState();
+  const [state, dispatch] = useReducer(reducer, {
     card: "",
     expiry: "",
     securityCode: "",

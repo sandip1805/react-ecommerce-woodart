@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="grid h-screen justify-center items-center">
+    <div className="grid h-screen justify-center items-center m-10 lg:m-0">
       <Card color="transparent" className="p-12 login_register_shadow">
         <Typography variant="h2" className="text-center text-black">
           Sign Up

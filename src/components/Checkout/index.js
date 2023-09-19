@@ -5,20 +5,35 @@ import Container from "../Container";
 import ShippingInfo from "./ShippingInfo";
 import PaymentInfo from "./PaymentInfo";
 import PaymentConfirmation from "./PaymentConfirmation";
+import authService from "../../services/AuthService";
+import { useHref, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
+  const routeUrl = useHref();
+  const navigate = useNavigate();
   const [activeTabValue, setActiveTabValue] = useState("shipping");
   const [isAddressCompleted, setIsAddressCompleted] = useState(false);
   const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
 
   useEffect(() => {
+    authService
+    .authCheck(routeUrl)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      navigate({
+        pathname: '/login',
+        search: `returnUrl=${routeUrl}`
+      });
+    });
     console.log(activeTabValue);
     console.log(isAddressCompleted);
     const cartObservable = CartItems.subscribe((cartItems) => {
       console.log(cartItems);
     });
     return () => cartObservable.unsubscribe();
-  }, [activeTabValue, isAddressCompleted]);
+  }, [activeTabValue, isAddressCompleted, routeUrl, navigate]);
 
   const handleShippingCallBack = (data) => {
     console.log(data);
