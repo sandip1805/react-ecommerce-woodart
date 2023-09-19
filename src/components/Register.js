@@ -52,7 +52,7 @@ const Register = () => {
   return (
     <div className="grid h-screen justify-center items-center">
       <Card color="transparent" className="p-12 login_register_shadow">
-        <Typography variant="h4" className="text-center text-black">
+        <Typography variant="h2" className="text-center text-black">
           Sign Up
         </Typography>
         <Typography color="gray" className="mt-1 font-normal text-center">
