@@ -1,27 +1,65 @@
-import { Avatar, Button, Typography } from "@material-tailwind/react";
+import { Avatar, Button, Input, Typography } from "@material-tailwind/react";
 import React, { useEffect, useState } from "react";
 import {
+  EnvelopeIcon,
+  PhoneIcon,
   MapPinIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
 import Container from "./Container";
-import { Link } from "react-router-dom";
 import { User } from "../services/AuthService";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: (userDetails?.name) ? (userDetails?.name) : '',
+      email: (userDetails?.email) ? (userDetails?.email) : '',
+      address: (userDetails?.address) ? (userDetails?.address) : '',
+      contactNumber: (userDetails?.contactNumber) ? (userDetails?.contactNumber) : '',
+    }
+  });
 
   useEffect(() => {
-    console.log("JJKSHKDHS")
+    console.log("JJKSHKDHS");
     const userObservable = User.subscribe((res) => {
       console.log(res);
       if (res) {
         setUserDetails(res);
+        setValue('name', (res?.name) ? (res?.name) : '');
+        setValue('email', (res?.email) ? (res?.email) : '');
+        setValue('address', (res?.address) ? (res?.address) : '');
+        setValue('contactNumber', (res?.contactNumber) ? (res?.contactNumber) : '');
+      }
+      else {
+        navigate('/');
       }
     });
     return () => {
       userObservable.unsubscribe();
     };
-  }, [userDetails]);
+  }, []);
+
+  const handleContactSubmit = ({name, email, address, contactNumber}) => {
+    const newDetails = { ...userDetails, name, email, address, contactNumber };
+    console.log("Form data submitted:", newDetails);
+    User.next(newDetails);
+    // Add logic here to send the form data to a server, store in a database, etc.
+  };
+
+  const whiteSpaceValidation = async (value) => {
+    return !!value.trim();
+  };
 
   return (
     <>
@@ -46,79 +84,173 @@ const Profile = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
-                  <Link to="/">
-                    <Button className="bg-blue-400">Home</Button>
-                  </Link>
-                </div>
-                <div className="w-full px-4 lg:order-1 lg:w-4/12">
-                  <div className="flex justify-center py-4 pt-8 lg:pt-4">
-                    <div className="mr-4 p-3 text-center">
-                      <Typography
-                        variant="lead"
-                        className="font-bold uppercase"
-                      >
-                        22
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        className="font-normal"
-                      >
-                        Friends
-                      </Typography>
-                    </div>
-                    <div className="mr-4 p-3 text-center">
-                      <Typography
-                        variant="lead"
-                        className="font-bold uppercase"
-                      >
-                        10
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        className="font-normal"
-                      >
-                        Photos
-                      </Typography>
-                    </div>
-                    <div className="p-3 text-center lg:mr-4">
-                      <Typography
-                        variant="lead"
-                        className="font-bold uppercase"
-                      >
-                        89
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        className="font-normal"
-                      >
-                        Comments
-                      </Typography>
-                    </div>
+              </div>
+              {!isEditMode ? (
+                <div className="my-8 text-center">
+                  <Typography variant="h2" className="mb-6">
+                    {userDetails?.name}
+                  </Typography>
+                  <div className="mb-2 flex items-center justify-center gap-2">
+                    <MapPinIcon className="-mt-px h-4 w-4" />
+                    <Typography className="font-medium">
+                      {userDetails?.address
+                        ? userDetails?.address
+                        : "H-123, Ahmedabad, Gujarat."}
+                    </Typography>
+                  </div>
+                  <div className="mb-2 flex items-center justify-center gap-2">
+                    <EnvelopeIcon className="-mt-px h-4 w-4" />
+                    <Typography className="font-medium">
+                      {userDetails?.email}
+                    </Typography>
+                  </div>
+                  <div className="mb-2 flex items-center justify-center gap-2">
+                    <PhoneIcon className="-mt-px h-4 w-4" />
+                    <Typography className="font-medium">
+                      {userDetails?.contactNumber
+                        ? userDetails?.contactNumber
+                        : "1234567890"}
+                    </Typography>
                   </div>
                 </div>
-              </div>
-              <div className="my-8 text-center">
-                <Typography variant="h2" className="mb-2">
-                  Jenna Stones
-                </Typography>
-                <div className="mb-16 flex items-center justify-center gap-2">
-                  <MapPinIcon className="-mt-px h-4 w-4" />
-                  <Typography className="font-medium">
-                    Los Angeles, California
-                  </Typography>
-                </div>
-                {/* <div className="mb-2 flex items-center justify-center gap-2">
-                  <Typography
-                    variant="h4"
-                    className="text-lg flex items-center justify-center gap-2"
-                  >
-                    Date of Birth -
-                    <Typography variant="paragraph" className="text-sm">
-                      11/10/1999
-                    </Typography>
-                  </Typography>
-                </div> */}
+              ) : (
+                <form
+                  className="mt-8 mb-2"
+                  onSubmit={handleSubmit(handleContactSubmit)}
+                >
+                  <div className="mb-4 flex justify-center">
+                    <div className="w-1/3">
+                      <Input
+                        required
+                        type="text"
+                        size="lg"
+                        label="Name"
+                        autoComplete="off"
+                        {...register("name", {
+                          required: {
+                            value: true,
+                            message: "⚠ Name is required to continue.",
+                          },
+                          validate: whiteSpaceValidation,
+                        })}
+                      />
+                      <span className="flex justify-start text-left input_field_error">
+                        <p className="text-red text-sm font-medium">
+                          <ErrorMessage errors={errors} name="name" />
+                        </p>
+                        {errors.name && errors.name.type === "validate" && (
+                          <p className="text-red text-sm font-medium">
+                            ⚠ Name is required to continue.
+                          </p>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mb-4 flex justify-center">
+                    <div className="w-1/3">
+                      <Input
+                        required
+                        size="lg"
+                        label="Email"
+                        {...register("email", {
+                          required: {
+                            value: true,
+                            message: "⚠ Email is required to continue.",
+                          },
+                          pattern: {
+                            value:
+                              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                            message: "⚠ Please enter a valid Email",
+                          },
+                        })}
+                      />
+                      <span className="flex justify-start text-left input_field_error">
+                        <p className="text-red text-sm font-medium">
+                          <ErrorMessage errors={errors} name="email" />
+                        </p>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mb-4 flex justify-center">
+                    <div className="w-1/3">
+                      <Input
+                        required
+                        type="text"
+                        size="lg"
+                        label="Address"
+                        autoComplete="off"
+                        {...register("address", {
+                          required: {
+                            value: true,
+                            message: "⚠ Address is required to continue.",
+                          },
+                          validate: whiteSpaceValidation,
+                        })}
+                      />
+                      <span className="flex justify-start text-left input_field_error">
+                        <p className="text-red text-sm font-medium">
+                          <ErrorMessage errors={errors} name="address" />
+                        </p>
+                        {errors.address && errors.address.type === "validate" && (
+                          <p className="text-red text-sm font-medium">
+                            ⚠ Address is required to continue.
+                          </p>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mb-4 flex justify-center">
+                    <div className="w-1/3">
+                      <Input
+                        required
+                        type="number"
+                        size="lg"
+                        label="Contact Number"
+                        autoComplete="off"
+                        {...register("contactNumber", {
+                          required: {
+                            value: true,
+                            message: "⚠ Contact Number is required to continue.",
+                          },
+                          maxLength: {
+                            value: 10,
+                            message: "⚠ Please enter a valid Contact Number to continue."
+                          },
+                          validate: whiteSpaceValidation,
+                        })}
+                      />
+                      <span className="flex justify-start text-left input_field_error">
+                        <p className="text-red text-sm font-medium">
+                          <ErrorMessage errors={errors} name="contactNumber" />
+                        </p>
+                        {errors.contactNumber && errors.contactNumber.type === "validate" && (
+                          <p className="text-red text-sm font-medium">
+                            ⚠ Contact Number is required to continue.
+                          </p>
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                </form>
+              )}
+              <div className="my-8 text-center pb-10">
+                {isEditMode ? (
+                  <div className="flex gap-4 justify-center">
+                    <Button
+                      type="submit"
+                      onClick={handleSubmit(handleContactSubmit)}
+                    >
+                      Update Profile
+                    </Button>
+                    <Button onClick={() => setIsEditMode(false)}>Cancel</Button>
+                  </div>
+                ) : (
+                  <div className="flex justify-center">
+                    <Button onClick={() => setIsEditMode(true)}>
+                      Edit Profile
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

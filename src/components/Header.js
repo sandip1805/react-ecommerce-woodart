@@ -45,11 +45,6 @@ function ProfileMenu(props) {
           pageUrl: '/profile'
         },
         {
-          label: "Edit Profile",
-          icon: Cog6ToothIcon,
-          pageUrl: '/edit-profile'
-        },
-        {
           label: "Logout",
           icon: PowerIcon,
           pageUrl: '/logout'
@@ -75,6 +70,7 @@ function ProfileMenu(props) {
 
   const handleLogOut = (e) => {
     User.next(null);
+    localStorage.setItem('user', null);
   }
  
   return (

@@ -134,7 +134,7 @@ const Login = () => {
                     </a>
                   </Typography>
                 }
-                containerProps={{ className: "-ml-2.5 terms_and_condition" }}
+                containerProps={{ className: "-ml-2.5" }}
               />
               <span className="flex justify-start text-left input_field_error">
                 <p className="text-red text-sm font-medium">
