@@ -69,7 +69,7 @@ const Checkout = () => {
             <TabPanel value="shipping" className="flex justify-between p-2 py-8">
               <ShippingInfo shippingCallback={handleShippingCallBack}/>
             </TabPanel>
-            <TabPanel value="payment">
+            <TabPanel value="payment" className="w-full p-0 lg:p-6">
               <PaymentInfo paymentCallback={handlePaymentCallBack}/>
             </TabPanel>
             <TabPanel value="confirmation">

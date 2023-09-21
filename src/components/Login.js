@@ -57,8 +57,8 @@ const Login = () => {
 
   return (
     <>
-      <div className='grid h-screen justify-center items-center'>
-        <Card color="transparent" className="p-12 login_register_shadow">
+      <div className='grid h-screen justify-center items-center '>
+        <Card color="transparent" className="lg:p-12 p-8 login_register_shadow">
           <Typography variant="h2" className="text-center text-black">
             Sign In
           </Typography>

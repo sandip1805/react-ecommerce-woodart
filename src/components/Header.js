@@ -17,7 +17,6 @@ import {
 import {
   UserCircleIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
   PowerIcon,
   Bars2Icon,
   ShoppingBagIcon,

@@ -67,7 +67,7 @@ const Profile = () => {
         <div className="bg-profile-background absolute top-0 h-full w-full bg-[url('https://images.unsplash.com/photo-1448932223592-d1fc686e76ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80')] bg-cover bg-center" />
         <div className="absolute top-0 h-full w-full bg-black/75 bg-cover bg-center" />
       </section>
-      <section className="relative py-16 px-4">
+      <section className="relative py-16 px-4 pb-0">
         <Container className="flex flex-wrap lg:py-20 py-10">
           <div className="relative mb-6 -mt-64 flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/2">
             <div className="px-6">
@@ -119,7 +119,7 @@ const Profile = () => {
                   onSubmit={handleSubmit(handleContactSubmit)}
                 >
                   <div className="mb-4 flex justify-center">
-                    <div className="w-1/3">
+                    <div className="lg:w-1/3 w-full">
                       <Input
                         required
                         type="text"
@@ -147,7 +147,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="mb-4 flex justify-center">
-                    <div className="w-1/3">
+                    <div className="lg:w-1/3 w-full">
                       <Input
                         required
                         size="lg"
@@ -172,7 +172,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="mb-4 flex justify-center">
-                    <div className="w-1/3">
+                    <div className="lg:w-1/3 w-full">
                       <Input
                         required
                         type="text"
@@ -200,7 +200,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="mb-4 flex justify-center">
-                    <div className="w-1/3">
+                    <div className="lg:w-1/3 w-full">
                       <Input
                         required
                         type="number"
