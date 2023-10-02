@@ -55,6 +55,60 @@ const products = [
       ],
       favourite: false
     },
+    {
+      _id: 4,
+      name: 'Wooden Sculpture 4',
+      description: 'Beautiful handcrafted wooden sculpture.',
+      price: 10,
+      stockQuantity: 10,
+      category: 'Sculptures',
+      images: ['product_img_1.jpg', 'product_img_2.jpg'],
+      primary_image: 'product_img_1.jpg',
+      reviews: [
+        {
+          userId: 'user1',
+          rating: 5,
+          comment: 'Absolutely stunning work!'
+        }
+      ],
+      favourite: false
+    },
+    {
+      _id: 5,
+      name: 'Wooden Sculpture 5',
+      description: 'Beautiful handcrafted wooden sculpture.',
+      price: 20,
+      stockQuantity: 10,
+      category: 'Sculptures',
+      images: ['product_img_1.jpg', 'product_img_2.jpg'],
+      primary_image: 'product_img_2.jpg',
+      reviews: [
+        {
+          userId: 'user1',
+          rating: 5,
+          comment: 'Absolutely stunning work!'
+        }
+      ],
+      favourite: false
+    },
+    {
+      _id: 6,
+      name: 'Wooden Sculpture 6',
+      description: 'Beautiful handcrafted wooden sculpture.',
+      price: 30,
+      stockQuantity: 10,
+      category: 'Sculptures',
+      images: ['product_img_1.jpg', 'product_img_2.jpg'],
+      primary_image: 'product_img_1.jpg',
+      reviews: [
+        {
+          userId: 'user1',
+          rating: 5,
+          comment: 'Absolutely stunning work!'
+        }
+      ],
+      favourite: false
+    },
     // Add more product objects here
   ];
   

@@ -365,8 +365,8 @@ const PaymentInfo = (props) => {
                   </div>
                 </ListItemPrefix>
                 <div className="flex flex-col mt-6 w-full">
-                  <PayPalScriptProvider options={{ clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID }}>
-                    <PayPalButtons 
+                  <PayPalScriptProvider options={{ clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID, currency: 'USD' }}>
+                    <PayPalButtons
                       onApprove={(data) => {
                         console.log(data);
                       }}

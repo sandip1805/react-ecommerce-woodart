@@ -23,7 +23,7 @@ import {
   PhoneIcon,
   LockClosedIcon
 } from "@heroicons/react/24/outline";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartItems } from '../services/CartService';
 import { User } from '../services/AuthService';
 
@@ -32,7 +32,7 @@ import { User } from '../services/AuthService';
 function ProfileMenu(props) {
   const [profileMenuItems, setProfileMenuItems] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
- 
+  const navigate = useNavigate();
   const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
@@ -70,6 +70,7 @@ function ProfileMenu(props) {
   const handleLogOut = (e) => {
     User.next(null);
     localStorage.setItem('user', null);
+    navigate('/');
   }
  
   return (
