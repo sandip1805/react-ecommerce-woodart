@@ -1,11 +1,9 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const expressSession = require("express-session");
-const passport = require("passport");
-
 require("dotenv").config();
 
 // Import routes
@@ -17,64 +15,47 @@ const paymentsRouter = require("./routes/payments");
 const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
 
-// Initialize app
 const app = express();
 
 /**
- * CORS Configuration
+ * MongoDB Connection using Mongoose
  */
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:3000", // Frontend URL
-  credentials: true, // Allow credentials (cookies, headers)
-};
-app.use(cors(corsOptions));
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => {
+    console.error("Failed to connect to MongoDB:", error.message);
+    process.exit(1); // Exit if the database connection fails
+  });
 
 /**
  * Middleware
  */
-app.use(logger("dev")); // Logging
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: false })); // Parse URL-encoded requests
-app.use(cookieParser()); // Parse cookies
-app.use(express.static(path.join(__dirname, "public"))); // Serve static files
-
-/**
- * Session Configuration
- */
-const session = {
-  secret: process.env.SESSION_SECRET,
-  cookie: {},
-  resave: false,
-  saveUninitialized: false,
-};
-if (app.get("env") === "production") {
-  session.cookie.secure = true; // Secure cookies in production
-}
-app.use(expressSession(session));
-
-/**
- * Passport Configuration
- */
-require("./config/passport"); // Assuming you configure Passport in a separate file
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000", credentials: true }));
 
 /**
  * Routes
  */
-app.use("/auth", authRouter); // Authentication routes
-app.use("/products", productsRouter); // Product routes
-app.use("/cart", cartRouter); // Cart routes
-app.use("/orders", ordersRouter); // Order routes
-app.use("/payments", paymentsRouter); // Payment routes
-app.use("/users", usersRouter); // User profile routes
-app.use("/admin", adminRouter); // Admin routes
+app.use("/auth", authRouter);
+app.use("/products", productsRouter);
+app.use("/cart", cartRouter);
+app.use("/orders", ordersRouter);
+app.use("/payments", paymentsRouter);
+app.use("/users", usersRouter);
+app.use("/admin", adminRouter);
 
 /**
  * Default Route
  */
 app.get("/", (req, res) => {
-  res.send("Welcome to the Wood Store API!");
+  res.send("Welcome to the Woodstore API!");
 });
 
 /**
