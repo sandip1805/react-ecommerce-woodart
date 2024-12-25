@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Map React development server to localhost
+    volumes:
+      - ./client:/app # Mount local client folder for live reload
+      - /app/node_modules # Exclude node_modules for live reload
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Fix for live reload in Docker
+    stdin_open: true
+    tty: true
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001" # Map backend server to localhost
+    volumes:
+      - ./server:/app # Mount local server folder for live reload
+      - /app/node_modules # Exclude node_modules for live reload
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/woodstore # MongoDB URI
+      - NODE_ENV=development
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5.0
+    container_name: mongo
+    ports:
+      - "27017:27017" # Map MongoDB to localhost
+    volumes:
+      - mongo-data:/data/db # Persist MongoDB data
+
+volumes:
+  mongo-data:

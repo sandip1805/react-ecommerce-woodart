@@ -14,8 +14,8 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
-# Expose port 3000 for the React development server
-EXPOSE 3000
+# Expose port 3001 for the Node.js server
+EXPOSE 3001
 
-# Start React development server
-CMD ["npm", "start"]
+# Start the server
+CMD ["npm", "run", "dev"]
