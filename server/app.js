@@ -1,106 +1,96 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 const expressSession = require("express-session");
 const passport = require("passport");
-const Auth0Strategy = require("passport-auth0");
 
 require("dotenv").config();
 
-
+// Import routes
 const authRouter = require("./routes/auth");
+const productsRouter = require("./routes/products");
+const cartRouter = require("./routes/cart");
+const ordersRouter = require("./routes/orders");
+const paymentsRouter = require("./routes/payments");
+const usersRouter = require("./routes/users");
+const adminRouter = require("./routes/admin");
 
-var app = express();
+// Initialize app
+const app = express();
 
 /**
- * Session Configuration (New!)
+ * CORS Configuration
  */
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || "http://localhost:3000", // Frontend URL
+  credentials: true, // Allow credentials (cookies, headers)
+};
+app.use(cors(corsOptions));
 
+/**
+ * Middleware
+ */
+app.use(logger("dev")); // Logging
+app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded requests
+app.use(cookieParser()); // Parse cookies
+app.use(express.static(path.join(__dirname, "public"))); // Serve static files
+
+/**
+ * Session Configuration
+ */
 const session = {
   secret: process.env.SESSION_SECRET,
   cookie: {},
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 };
-
 if (app.get("env") === "production") {
-  // Serve secure cookies, requires HTTPS
-  session.cookie.secure = true;
+  session.cookie.secure = true; // Secure cookies in production
 }
+app.use(expressSession(session));
 
 /**
  * Passport Configuration
  */
-
-const strategy = new Auth0Strategy(
-  {
-    domain: process.env.AUTH0_DOMAIN,
-    clientID: process.env.AUTH0_CLIENT_ID,
-    clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL: process.env.AUTH0_CALLBACK_URL
-  },
-  function(accessToken, refreshToken, extraParams, profile, done) {
-    /**
-     * Access tokens are used to authorize users to an API
-     * (resource server)
-     * accessToken is the token to call the Auth0 API
-     * or a secured third-party API
-     * extraParams.id_token has the JSON Web Token
-     * profile has all the information from the user
-     */
-    return done(null, profile);
-  }
-);
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(expressSession(session));
-
-passport.use(strategy);
+require("./config/passport"); // Assuming you configure Passport in a separate file
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, done) => {
-  done(null, user);
+/**
+ * Routes
+ */
+app.use("/auth", authRouter); // Authentication routes
+app.use("/products", productsRouter); // Product routes
+app.use("/cart", cartRouter); // Cart routes
+app.use("/orders", ordersRouter); // Order routes
+app.use("/payments", paymentsRouter); // Payment routes
+app.use("/users", usersRouter); // User profile routes
+app.use("/admin", adminRouter); // Admin routes
+
+/**
+ * Default Route
+ */
+app.get("/", (req, res) => {
+  res.send("Welcome to the Wood Store API!");
 });
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-// Creating custom middleware with Express
+/**
+ * Error Handling
+ */
+// Handle 404 errors
 app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.isAuthenticated();
-  next();
+  res.status(404).json({ error: "Resource not found" });
 });
 
-
-app.use('/', authRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+// Centralized error handler
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  res.status(status).json({
+    error: err.message || "Internal Server Error",
+  });
 });
 
 module.exports = app;
