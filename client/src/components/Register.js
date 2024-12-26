@@ -8,10 +8,10 @@ import {
 import authService from "../services/AuthService";
 import { Link } from "react-router-dom";
 import toastService from "../services/ToasterService.js";
-import { LoginSocialGoogle } from "reactjs-social-login";
+// import { LoginSocialGoogle } from "reactjs-social-login";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { FacebookLogin } from 'react-facebook-login-lite';
+// import { FacebookLogin } from 'react-facebook-login-lite';
 
 const Register = () => {
   const [provider, setProvider] = useState("");
@@ -166,7 +166,7 @@ const Register = () => {
           </p>
         </div>
         <div className="flex justify-center items-center gap-4">
-          <LoginSocialGoogle
+          {/* <LoginSocialGoogle
             isOnlyGetToken
             client_id={process.env.REACT_APP_GG_APP_ID || ""}
             onResolve={({ provider, data }) => {
@@ -211,7 +211,7 @@ const Register = () => {
               </Button>
             )}
           >
-          </FacebookLogin>
+          </FacebookLogin> */}
         </div>
       </Card>
     </div>
