@@ -11,7 +11,7 @@ import toastService from "../services/ToasterService.js";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { FacebookLogin } from 'react-facebook-login-lite';
 
 const Register = () => {
   const [provider, setProvider] = useState("");
