@@ -1,55 +1,48 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Update the import here
+import { Routes, Route } from "react-router-dom";
+import Index from "./pages/index";
+import "./assets/css/tailwind.css";
+import ShopGrid from "./pages/shop/shop-grid/shop-grid";
+import ShopList from "./pages/shop/shop-list/shop-list";
+import Shopcart from "./pages/shop/shop-cart";
+import ShopCheckOut from "./pages/shop/shop-checkout";
+import AboutUS from "./pages/pages/aboutus";
+import UserAccount from "./pages/pages/my-account/user-account";
+import UserBilling from "./pages/pages/my-account/user-billing";
+import UserPayment from "./pages/pages/my-account/user-payment";
+import UserSetting from "./pages/pages/my-account/user-setting";
+import Login from "./pages/pages/auth/login";
+import Signup from "./pages/pages/auth/signup";
+import ForgotPassword from "./pages/pages/auth/forgot-password";
+import Contact from "./pages/contact";
+import ProductDetailOne from "./pages/shop/shop-detail/product-detail-one";
+import SignSuccess from "./pages/pages/auth/signup-success";
 
-import Header from "./components/Header";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Products from "./components/Products";
-import ProductDetail from "./components/ProductDetails";
-import ContactUs from "./components/ContactUs";
-import { Footer } from "./components/Footer";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Profile from "./components/Profile";
-import Cart from "./components/Cart";
-import Checkout from "./components/Checkout";
-
-const App = () => {
+function App() {
   return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <ToastContainer />
-      <Router>
-        <div>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-            <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
-    </>
+    <Routes>
+      <Route path="/" element={<Index />}></Route>
+      <Route path="/shop-grid" element={<ShopGrid />}></Route>
+      <Route path="/shop-list" element={<ShopList />}></Route>
+      <Route path="/shop-cart" element={<Shopcart />}></Route>
+      <Route path="/shop-checkout" element={<ShopCheckOut />}></Route>
+      <Route path="/aboutus" element={<AboutUS />}></Route>
+      <Route path="/user-account" element={<UserAccount />}></Route>
+      <Route path="/user-billing" element={<UserBilling />}></Route>
+      <Route path="/user-payment" element={<UserPayment />}></Route>
+      <Route path="/user-setting" element={<UserSetting />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/signup" element={<Signup />}></Route>
+      <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+      <Route path="/contact" element={<Contact />}></Route>
+      <Route path="/product-detail-one" element={<ProductDetailOne />}></Route>
+      <Route
+        path="/product-detail-one/:id"
+        element={<ProductDetailOne />}
+      ></Route>
+      <Route path="/signup-success" element={<SignSuccess />}></Route>
+    </Routes>
   );
-};
+}
 
 export default App;
