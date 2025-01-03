@@ -8,13 +8,12 @@ import product2 from '../assets/images/shop/luxurious-bag2.jpg'
 import product3 from '../assets/images/shop/apple-smart-watch.jpg'
 import client from '../assets/images/client/16.jpg'
 
-import {FiSearch, FiShoppingCart, FiHeart, FiDollarSign, FiUser, FiSettings, FiLogOut} from "react-icons/fi"
+import {FiSearch, FiShoppingCart, FiHeart, FiUser, FiSettings, FiLogOut, FiLogIn, FiUserPlus, FiUnlock} from "react-icons/fi"
 
-export default function Navbar({navClass}){
+export default function Navbar({navClass, navlight = false}){
     let [scrolling, setScrolling] = useState(false);
     let [isToggle, setToggle] = useState(false);
     let [manu , setManu] = useState('');
-    let [subManu , setSubManu] = useState('');
     let [isOpen, setIsOpen] = useState(false);
     let [cartManu, setCartManu] = useState(false);
     let [userManu, setUserManu] = useState(false);
@@ -49,7 +48,6 @@ export default function Navbar({navClass}){
         
         let current = window.location.pathname
         setManu(current)
-        setSubManu(current)
         window.scrollTo(0, 0);
 
     return () => {
@@ -67,13 +65,22 @@ export default function Navbar({navClass}){
     return(
         <nav id="topnav" className={`${navClass} ${scrolling ? 'nav-sticky' : ''}`}>
             <div className="container relative">
-                {<Link className="logo" to="/">
+                {navlight === true ? (
+                    <Link className="logo" to="/">
                     <span className="inline-block dark:hidden">
                         <img src={logoDark} className="l-dark" alt=""/>
                         <img src={logoLight} className="l-light" alt=""/>
                     </span>
                     <img src={logoLight} className="hidden dark:inline-block" alt=""/>
-                </Link>}
+                </Link>
+                ) : (
+                    <Link className="logo" to="/">
+                        <div>
+                            <img src={logoDark} className="h-[22px] inline-block dark:hidden" alt=""/>
+                            <img src={logoLight} className="h-[22px] hidden dark:inline-block" alt=""/>
+                        </div>
+                    </Link>
+                )}
                 
 
                 <div className="menu-extras">
@@ -191,13 +198,19 @@ export default function Navbar({navClass}){
                                         <p className="text-slate-400 pt-2 px-4">Welcome Jesus!</p>
                                     </li>
                                     <li className='ms-0'>
-                                        <p className="flex items-center font-medium py-2 px-4"><FiDollarSign className="h-4 w-4 me-2"></FiDollarSign> Balance: <span className="text-orange-500 ms-2">$ 245.10</span></p>
-                                    </li>
-                                    <li className='ms-0'>
-                                        <Link to="/user-account" className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-orange-500 dark:hover:text-white"><FiUser className="h-4 w-4 me-2"></FiUser>Account</Link>
+                                        <Link to="/user-account" className={`flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-orange-500 dark:hover:text-white ${manu === '/user-account' ? 'active' : ''}`}><FiUser className="h-4 w-4 me-2"></FiUser>Account</Link>
                                     </li>
                                     <li className='ms-0'>
                                         <Link to="/user-setting" className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-orange-500 dark:hover:text-white"><FiSettings className="h-4 w-4 me-2"></FiSettings>Settings</Link>
+                                    </li>
+                                    <li className='ms-0'>
+                                        <Link to="/login" className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-orange-500 dark:hover:text-white"><FiLogIn className="h-4 w-4 me-2"></FiLogIn>Login</Link>
+                                    </li>
+                                    <li className='ms-0'>
+                                        <Link to="/signup" className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-orange-500 dark:hover:text-white"><FiUserPlus className="h-4 w-4 me-2"></FiUserPlus>Signup</Link>
+                                    </li>
+                                    <li className='ms-0'>
+                                        <Link to="/forgot-password" className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-orange-500 dark:hover:text-white"><FiUnlock className="h-4 w-4 me-2"></FiUnlock>Forgot Password</Link>
                                     </li>
                                     <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
                                     <li className='ms-0'>
@@ -210,67 +223,17 @@ export default function Navbar({navClass}){
                 </ul>
 
                 <div id="navigation" style={{display: isToggle === true ? 'block' : 'none'}}>
-                    <ul className={`navigation-menu nav-light}`}>
+                    <ul className={`navigation-menu ${navlight === true ? 'nav-light' : ''}`}>
                         <li className={`has-submenu parent-menu-item ${['/','/index-item'].includes(manu) ? 'active' : ''}`}>
-                            <Link to="#" onClick={()=>setSubManu(setManu === '/index-item' ? '' : '/index-item' )}>Hero</Link><span className="menu-arrow"></span>
-                            <ul className={`submenu ${['/','/index-item'].includes(subManu) ? 'open' : ''}`}>
-                                <li className={`ms-0 ${manu === '/' ? 'active' : ''}`}><Link to="/" className="sub-menu-item">Fashion One</Link></li>
-                            </ul>
+                            <Link to="/">Hero</Link>
                         </li>
 
-                        <li className={`has-submenu parent-parent-menu-item ${['/product-item'].includes(manu) ? 'active' : ''}`}>
-                            <Link to="#" onClick={()=>setSubManu(setManu === '/product-item' ? '' : '/product-item' )}>Products</Link><span className="menu-arrow"></span>
-                        </li>
-
-                        <li className={`has-submenu parent-parent-menu-item ${['/shop-grid', '/shop-list','/product-detail-one','/shop-cart','/shop-checkout','/shop-item','/list-item','/detail-item','/grid-item'].includes(manu) ? 'active' : ''}`}><Link to="#" onClick={()=>setSubManu(subManu=== '/shop-item' ? '' : '/shop-item')}> Shop </Link><span className="menu-arrow"></span>
-                            <ul className={`submenu ${['/shop-grid', '/shop-list','/product-detail-one','/shop-cart','/shop-checkout','/shop-item','/list-item','/detail-item','/grid-item'].includes(subManu) ? 'open' : ''}`}>
-                                <li className={`has-submenu parent-menu-item ms-0 ${['/shop-grid','/grid-item'].includes(manu) ? 'active' : ''}`}>
-                                    <Link to="#" onClick={()=>setSubManu(setManu === '/grid-item' ? '' : '/grid-item' )}> Shop Grid </Link><span className="submenu-arrow"></span>
-                                    <ul className={`submenu ${['/shop-grid','/grid-item'].includes(subManu) ? 'open' : ''}`}>
-                                        <li className={`ms-0 ${manu === '/shop-grid' ? 'active' : ''}`}><Link to="/shop-grid" className="sub-menu-item">Shop Grid</Link></li>
-                                    </ul>  
-                                </li>
-
-                                <li className={`has-submenu parent-menu-item ms-0 ${['/shop-list','/list-item'].includes(manu) ? 'active' : ''}`}>
-                                    <Link to="#" onClick={()=>setSubManu(setManu === '/list-item' ? '' : '/list-item' )}> Shop List </Link><span className="submenu-arrow"></span>
-                                    <ul className={`submenu ${['/shop-list','/list-item'].includes(subManu) ? 'open' : ''}`}>
-                                        <li className={`ms-0 ${manu === '/shop-list' ? 'active' : ''}`}><Link to="/shop-list" className="sub-menu-item">Shop List</Link></li>
-                                    </ul>  
-                                </li>
-
-                                <li className={`has-submenu parent-menu-item ms-0 ${['/product-detail-one','/detail-item'].includes(manu) ? 'active' : ''}`}>
-                                    <Link to="#" onClick={()=>setSubManu(setManu === '/detail-item' ? '' : '/detail-item' )}> Shop Detail </Link><span className="submenu-arrow"></span>
-                                    <ul className={`submenu ${['/product-detail-one','/detail-item'].includes(subManu) ? 'open' : ''}`}>
-                                        <li className={`ms-0 ${manu === '/product-detail-one' ? 'active' : ''}`}><Link to="/product-detail-one" className="sub-menu-item">Product Detail One</Link></li>
-                                    </ul>  
-                                </li>
-                                <li className={`ms-0 ${manu === '/shop-cart' ? 'active' : ''}`}><Link to="/shop-cart" className="sub-menu-item">Shop Cart</Link></li>
-                                <li className={`ms-0 ${manu === '/shop-checkout' ? 'active' : ''}`}><Link to="/shop-checkout" className="sub-menu-item">Checkout</Link></li>
-                            </ul>
+                        <li className={`has-submenu parent-parent-menu-item ${manu === '/shop-grid' ? 'active' : ''}`}>
+                            <Link to="/shop-grid">Products</Link>
                         </li>
                 
-                        <li className={`has-submenu parent-parent-menu-item ${['/aboutus','/user-account','/user-billing','/user-payment','/user-setting','/page-item','/user-item','/auth-item','/login','/signup','/forgot-password'].includes(manu) ? 'active' : ''}`}>
-                            <Link to="#" onClick={()=>setSubManu(setManu === '/page-item' ? '' : '/page-item' )}>Pages</Link><span className="menu-arrow"></span>
-                            <ul className={`submenu ${['/aboutus','/user-account','/user-billing','/user-payment','/user-setting','/page-item','/user-item','/auth-item','/login','/signup','/forgot-password'].includes(subManu) ? 'open' : ''}`}>
-                                <li className={`ms-0 ${manu === '/aboutus' ? 'active' : ''}`}><Link to="/aboutus" className="sub-menu-item">About Us</Link></li>
-
-                                <li className={`has-submenu parent-menu-item ms-0 ${['/user-account','/user-billing','/user-payment','/user-setting','/user-item',].includes(manu) ? 'active' : ''}`}><Link to="#" onClick={()=>setSubManu(setManu === '/user-item' ? '' : '/user-item' )}> My Account</Link><span className="submenu-arrow"></span>
-                                    <ul className={`submenu ${['/user-account','/user-billing','/user-payment','/user-setting','/user-item',].includes(subManu) ? 'open' : ''}`}>
-                                        <li className={`ms-0 ${manu === '/user-account' ? 'active' : ''}`}><Link to="/user-account" className="sub-menu-item">User Account</Link></li>
-                                        <li className={`ms-0 ${manu === '/user-billing' ? 'active' : ''}`}><Link to="/user-billing" className="sub-menu-item">Billing</Link></li>
-                                        <li className={`ms-0 ${manu === '/user-payment' ? 'active' : ''}`}><Link to="/user-payment" className="sub-menu-item">Payment</Link></li>
-                                        <li className={`ms-0 ${manu === '/user-setting' ? 'active' : ''}`}><Link to="/user-setting" className="sub-menu-item">Setting</Link></li>
-                                    </ul> 
-                                </li>
-
-                                <li className={`has-submenu parent-menu-item ms-0 ${['/login','/signup','/forgot-password','/auth-item'].includes(manu) ? 'active' : '' }`}><Link to="#" onClick={()=>setSubManu(setManu === '/auth-item' ? '' : '/auth-item' )}> Auth Pages </Link><span className="submenu-arrow"></span>
-                                    <ul className={`submenu ${['/login','/signup','/forgot-password','/auth-item'].includes(subManu) ? 'open' : '' }`}>
-                                        <li className='ms-0'><Link to="/login" className="sub-menu-item"> Login</Link></li>
-                                        <li className='ms-0'><Link to="/signup" className="sub-menu-item"> Signup</Link></li>
-                                        <li className='ms-0'><Link to="/forgot-password" className="sub-menu-item"> Forgot Password</Link></li>
-                                    </ul> 
-                                </li>
-                            </ul>
+                        <li className={`parent-parent-menu-item ${['/aboutus'].includes(manu) ? 'active' : ''}`}>
+                            <Link to="/aboutus">About Us</Link>
                         </li>
 
                         <li className={`${manu === '/contact' ? 'active' : ''}`}><Link to="/contact" className="sub-menu-item">Contact Us</Link></li>

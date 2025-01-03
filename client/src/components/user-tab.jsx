@@ -41,13 +41,6 @@ export default function Usertab(){
                                 </Link>
                             </li>
 
-                            <li className={`navbar-item account-menu ms-0 ${current === '/user-billing' ? 'active' : '' }`}>
-                                <Link to="/user-billing" className="navbar-link text-slate-400 flex items-center py-2 rounded">
-                                    <span className="me-2 mb-0"><FiEdit className="size-4"></FiEdit></span>
-                                    <h6 className="mb-0 font-medium">Billing Info</h6>
-                                </Link>
-                            </li>
-
                             <li className={`navbar-item account-menu ms-0 ${current === '/user-payment' ? 'active' : '' }`}>
                                 <Link to="/user-payment" className="navbar-link text-slate-400 flex items-center py-2 rounded">
                                     <span className="me-2 mb-0"><FiCreditCard className="size-4"></FiCreditCard></span>

@@ -33,7 +33,7 @@ export default function Index(){
 
     return(
         <>
-        <Navbar navClass="defaultscroll is-sticky tagline-height"/>
+        <Navbar navClass="defaultscroll is-sticky"/>
         <section className="relative md:flex table w-full items-center md:h-screen py-36 bg-emerald-500/5 md:bg-top bg-center bg-no-repeat bg-cover" style={{backgroundImage:`url(${heroBg})`}}>
             <div className="container relative">
                 <div className="grid grid-cols-1 justify-center">

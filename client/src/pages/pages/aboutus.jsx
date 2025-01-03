@@ -15,7 +15,7 @@ export default function AboutUS(){
     let [modal, setModal] = useState(false)
     return(
         <>
-        <Navbar navClass="defaultscroll is-sticky"/>
+        <Navbar navClass="defaultscroll is-sticky" navlight={true}/>
         <section className="relative table w-full items-center py-36 bg-[url('../../assets/images/hero/pages.jpg')] bg-top bg-no-repeat bg-cover">
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/80 to-slate-900"></div>
             <div className="container relative">

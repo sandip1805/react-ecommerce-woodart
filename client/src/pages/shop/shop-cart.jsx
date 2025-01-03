@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Navbar from "../../components/navbar";
-import MobileApp from "../../components/mobile-app";
 import Footer from "../../components/footer";
 import Counter from "../../components/counter";
 
@@ -96,8 +95,6 @@ export default function Shopcart(props){
                     </div>
                 </div>
             </div>
-
-            <MobileApp/>
         </section>
         <Footer/>
         <ScrollToTop/>

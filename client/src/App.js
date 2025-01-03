@@ -8,7 +8,6 @@ import Shopcart from "./pages/shop/shop-cart";
 import ShopCheckOut from "./pages/shop/shop-checkout";
 import AboutUS from "./pages/pages/aboutus";
 import UserAccount from "./pages/pages/my-account/user-account";
-import UserBilling from "./pages/pages/my-account/user-billing";
 import UserPayment from "./pages/pages/my-account/user-payment";
 import UserSetting from "./pages/pages/my-account/user-setting";
 import Login from "./pages/pages/auth/login";
@@ -28,7 +27,6 @@ function App() {
       <Route path="/shop-checkout" element={<ShopCheckOut />}></Route>
       <Route path="/aboutus" element={<AboutUS />}></Route>
       <Route path="/user-account" element={<UserAccount />}></Route>
-      <Route path="/user-billing" element={<UserBilling />}></Route>
       <Route path="/user-payment" element={<UserPayment />}></Route>
       <Route path="/user-setting" element={<UserSetting />}></Route>
       <Route path="/login" element={<Login />}></Route>

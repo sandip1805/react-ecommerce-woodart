@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Navbar from "../../components/navbar";
-import MobileApp from "../../components/mobile-app";
 import Footer from "../../components/footer";
 import ScrollToTop from "../../components/scroll-to-top";
 
@@ -228,8 +227,6 @@ export default function ShopCheckOut(){
                     </div>
                 </div>
             </div>
-
-            <MobileApp/>
         </section>
         <Footer/>
         <ScrollToTop/>
